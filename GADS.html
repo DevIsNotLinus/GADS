@@ -217,18 +217,18 @@
     const canvas = document.getElementById("Game");
     const graphics = canvas.getContext("2d");
     const playerimage = new Image();
-    playerimage.src = "kasmiy9dahb7.png"
+    playerimage.src = "assets/kasmiy9dahb7.png"
     const player = new Player(playerimage);
-    player.addSprite("Walk1.png","Walk");
-    player.addSprite("Walk2.png","Walk");
-    player.addSprite("Walk3.png","Walk");
-    player.addSprite("Walk4.png","Walk");
-    player.addSprite("Idle1.png","Idle");
-    player.addSprite("Idle1.png","Idle");
-    player.addSprite("Idle1.png","Idle");
-    player.addSprite("Idle2.png","Idle");
-    player.addSprite("Idle2.png","Idle");
-    player.addSprite("Idle2.png","Idle");
+    player.addSprite("assets/Walk1.png","Walk");
+    player.addSprite("assets/Walk2.png","Walk");
+    player.addSprite("assets/Walk3.png","Walk");
+    player.addSprite("assets/Walk4.png","Walk");
+    player.addSprite("assets/Idle1.png","Idle");
+    player.addSprite("assets/Idle1.png","Idle");
+    player.addSprite("assets/Idle1.png","Idle");
+    player.addSprite("assets/Idle2.png","Idle");
+    player.addSprite("assets/Idle2.png","Idle");
+    player.addSprite("assets/Idle2.png","Idle");
     player.startAnimation("Idle")
     const playerLight= new LightSource(player);
 
@@ -296,4 +296,5 @@
 
 </script>
 </body>
+
 </html>
