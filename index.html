@@ -6,6 +6,24 @@
             this.y = y;
 
         }
+        isTouching (other){
+            if (this.x + this.getWidth() < other.x - other.getWidth())
+                return false;
+            if (this.x - this.getWidth() < other.x + other.getWidth())
+                return false;
+
+            if (this.y + this.getHeight() < other.y - other.getHeight())
+                return false;
+            return this.y - this.getHeight() >= other.y + other.getHeight();
+
+        }
+        getWidth (){
+            return 0
+        }
+
+        getHeight (){
+            return 0
+        }
 
         update() {
         }
@@ -27,6 +45,8 @@
             this.speedY = 0;
         }
         collision() {
+            if (this.isTouching(lampPost))
+                console.log('touch')
             return this.y > 500;
         }
 
@@ -71,6 +91,15 @@
                 this.startAnimation("Idle")
 
         }
+        getWidth() {
+            const frame = this.animations[this.currentAnimation][Math.floor(this.currentFrame)];
+            return frame.width;
+        }
+
+        getHeight() {
+            const frame = this.animations[this.currentAnimation][Math.floor(this.currentFrame)];
+            return frame.height;
+        }
 
         draw(graphics) {
             if (this.currentAnimation !== null) {
@@ -109,6 +138,14 @@
             super(x,y);
             this.zoom = zoom;
             this.costume = costume;
+        }
+
+        getWidth() {
+            return this.costume.width;
+        }
+
+        getHeight() {
+            return this.costume.height;
         }
 
         draw(graphics) {
@@ -157,6 +194,8 @@
         this.distance=distance;
         this.gameObjects = [];
     }
+
+
         draw(graphics,camera) {
             graphics.save();
             graphics.transform(1/this.distance,0,0,1/this.distance,0,0);
@@ -198,7 +237,6 @@
     let pressedKeys = {};
 
     function keyPressed(event) {
-        console.log("hej");
         pressedKeys[event.key] = true;
     }
 
@@ -247,8 +285,8 @@
     fog.src = "assets/Fog3.png";
     const BG= new Image();
     BG.src = "assets/Background.png";
-    const lampPost = new Image();
-    lampPost.src = "assets/Lamppost1.png";
+    const lampPostImg = new Image();
+    lampPostImg.src = "assets/Lamppost1.png";
     const stoneFloor = new Image();
     stoneFloor.src = "assets/StonedFloor.png";
 
@@ -258,7 +296,8 @@
     playerLayer.addGameObject(l1);
     //playerLayer.addGameObject(new LightSource(l1));
     //playerLayer.addGameObject(new LightSource(l1,fog));
-    playerLayer.addGameObject(new Level(100,0 , lampPost, 2));
+    const lampPost = new Level(100,0 , lampPostImg, 2);
+    playerLayer.addGameObject(lampPost);
     for( var i=0; i<10; i++){
         playerLayer.addGameObject(new Level(i*860, 590, stoneFloor, 1.8));
     }
