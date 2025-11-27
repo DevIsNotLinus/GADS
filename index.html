@@ -112,10 +112,10 @@
         }
 
         draw(graphics) {
-            graphics.save();
-            graphics.transform(this.zoom,0,0, this.zoom,0,0);
-            graphics.drawImage(this.costume, this.x, this.y);
-            graphics.restore();
+           // graphics.save();
+          //  graphics.transform(this.zoom,0,0, this.zoom,0,0);
+            graphics.drawImage(this.costume, this.x - this.costume.width/2, this.y + this.costume.height/2, this.costume.width*this.zoom, this.costume.height*this.zoom );
+           // graphics.restore();
         }
     }
 
@@ -247,26 +247,34 @@
     fog.src = "assets/Fog3.png";
     const BG= new Image();
     BG.src = "assets/Background.png";
+    const lampPost = new Image();
+    lampPost.src = "assets/Lamppost1.png";
+    const stoneFloor = new Image();
+    stoneFloor.src = "assets/StonedFloor.png";
 
-
-    const layer1 = new Layer(1);
-    layer1.addGameObject(new Level(200, 300, floorimage));
+    const playerLayer = new Layer(1);
+    playerLayer.addGameObject(new Level(200, 300, floorimage));
     const l1 = new Level(400, 300, floorimage);
-    layer1.addGameObject(l1);
-    //layer1.addGameObject(new LightSource(l1));
-    //layer1.addGameObject(new LightSource(l1,fog));
+    playerLayer.addGameObject(l1);
+    //playerLayer.addGameObject(new LightSource(l1));
+    //playerLayer.addGameObject(new LightSource(l1,fog));
+    playerLayer.addGameObject(new Level(100,0 , lampPost, 2));
+    for( var i=0; i<10; i++){
+        playerLayer.addGameObject(new Level(i*860, 590, stoneFloor, 1.8));
+    }
 
-    const layer2 = new Layer(2);
-    layer2.addGameObject(new Level(200, -100, obj3img));
-    layer2.addGameObject(new Level(600, 10, obj4img));
 
-    const layer3 = new Layer(3);
-    layer3.addGameObject(new Level(0, -50, BG,6));
+    const nearBackgroundLayer = new Layer(2);
+    nearBackgroundLayer.addGameObject(new Level(200, -100, obj3img));
+    nearBackgroundLayer.addGameObject(new Level(600, 10, obj4img));
 
-    const layer4 = new Layer(4);
-    layer4.addGameObject(new Level(200, -100, obj2img));
+    const middleBackgroundLayer = new Layer(3);
+    middleBackgroundLayer.addGameObject(new Level(0, -1540, BG,6));
+
+    const farBackgroundLayer = new Layer(4);
+    farBackgroundLayer.addGameObject(new Level(200, -100, obj2img));
     const redLight = new Level(3000, 2700, obj1img);
-    layer4.addGameObject(redLight);
+    farBackgroundLayer.addGameObject(redLight);
 
     const camera = new Camera(player, graphics);
     let lastTime = 0;
@@ -280,10 +288,10 @@
         player.update();
         playerLight.update();
         camera.update();
-        layer4.draw(graphics,camera);
-        layer3.draw(graphics,camera);
-        layer2.draw(graphics,camera);
-        layer1.draw(graphics,camera);
+        farBackgroundLayer.draw(graphics,camera);
+        middleBackgroundLayer.draw(graphics,camera);
+        nearBackgroundLayer.draw(graphics,camera);
+        playerLayer.draw(graphics,camera);
         camera.drawObj(player);
         camera.drawObj(playerLight);
 
@@ -295,7 +303,7 @@
     control_Loop();
 
 </script>
-    Foo
+
 </body>
 
 </html>
