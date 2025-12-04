@@ -7,14 +7,17 @@
 
         }
         isTouching (other){
-            if (this.x + this.getWidth() < other.x - other.getWidth())
-                return false;
-            if (this.x - this.getWidth() < other.x + other.getWidth())
-                return false;
 
-            if (this.y + this.getHeight() < other.y - other.getHeight())
+            if (this.x + this.getWidth() < other.x )
                 return false;
-            return this.y - this.getHeight() >= other.y + other.getHeight();
+            if (other.x + other.getWidth() < this.x )
+                return false;
+            if (this.y + this.getHeight() < other.y )
+                return false;
+            if (other.y + other.getHeight() < this.y )
+                return false;
+            return true;
+
 
         }
         getWidth (){
@@ -141,11 +144,11 @@
         }
 
         getWidth() {
-            return this.costume.width;
+            return this.costume.width*this.zoom;
         }
 
         getHeight() {
-            return this.costume.height;
+            return this.costume.height*this.zoom;
         }
 
         draw(graphics) {
